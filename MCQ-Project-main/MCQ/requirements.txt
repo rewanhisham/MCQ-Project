@@ -1,0 +1,8 @@
+gunicorn
+flask
+tensorflow==2.3.0
+pillow
+numpy
+protobuf==3.20.*
+pandas
+imutils
