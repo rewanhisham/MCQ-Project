@@ -1,12 +1,11 @@
-from imutils.perspective import four_point_transform
 import imutils
+from imutils.perspective import four_point_transform
 from imutils import contours
 import cv2
 from flask import Flask, request, render_template, url_for, jsonify
 import numpy as np
 from PIL import Image
 app = Flask(__name__)
-
 
 @app.route('/')
 def index():
@@ -111,7 +110,6 @@ def procssing(gray):
                 bubbled = (total, j)
         ANSWER_KEY.append(bubbled[1])
     return ANSWER_KEY
-
 
 if __name__ == '__main__':
     app.run(debug=True)
