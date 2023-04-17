@@ -2,6 +2,7 @@ gunicorn
 flask
 pillow
 numpy
+pandas
 protobuf==3.20.*
 imutils
 opencv-python
