@@ -82,10 +82,10 @@ def index():
 def api():
     # Get the image from post request
     try:
-        if 'fileup' not in request.files:
+        if 'fileup2' not in request.files:
             return "Please try again. The Image doesn't exist"
-        image = request.files.get('fileup')
-        image2 = request.files.get('fileup2')
+        image = request.files.get('fileup2')
+        image2 = request.files.get('fileup')
         score = readIamge(image, image2)
         prediction = score
         return jsonify({'prediction': prediction})
