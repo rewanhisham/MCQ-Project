@@ -6,27 +6,6 @@ from flask import Flask, request, render_template, url_for, jsonify
 import numpy as np
 from PIL import Image
 app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html', appName="Intel Image Classification")
-
-
-@app.route('/predictApi', methods=["POST"])
-def api():
-    # Get the image from post request
-    try:
-        if 'fileup' not in request.files or 'fileup2' not in request.files:
-            return "Please try again. The Image doesn't exist"
-        image = request.files.get('fileup')
-        image2 = request.files.get('fileup2')
-        score = readIamge(image, image2)
-        prediction = score
-        return jsonify({'prediction': prediction})
-    except:
-        return jsonify({'Error': 'Error occur'})
-
-
 def readIamge(img, img2):
     image1 = Image.open(img)
     image2 = Image.open(img2)
@@ -40,22 +19,6 @@ def readIamge(img, img2):
             correct.append(1)
     score = (sum(correct)/5)*100
     return score
-
-
-@app.route('/predict', methods=['GET', 'POST'])
-def predict():
-    print("run code")
-    if request.method == 'POST':
-        print("image loading....")
-        image1 = request.files['fileup2']
-        image2 = request.files['fileup']
-        score = readIamge(image1, image2)
-        prediction = score
-        return render_template('index.html', prediction=f' your grade is : {prediction}')
-    else:
-        return render_template('index.html', appName="Intel Image Classification")
-# eXtract correct from orgnal image
-
 
 def procssing(gray):
     ANSWER_KEY = []
@@ -110,6 +73,44 @@ def procssing(gray):
                 bubbled = (total, j)
         ANSWER_KEY.append(bubbled[1])
     return ANSWER_KEY
+@app.route('/')
+def index():
+    return render_template('index.html', appName="Intel Image Classification")
+
+
+@app.route('/predictApi', methods=["POST"])
+def api():
+    # Get the image from post request
+    try:
+        if 'fileup' not in request.files or 'fileup2' not in request.files:
+            return "Please try again. The Image doesn't exist"
+        image = request.files.get('fileup')
+        image2 = request.files.get('fileup2')
+        score = readIamge(image, image2)
+        prediction = score
+        return jsonify({'prediction': prediction})
+    except:
+        return jsonify({'Error': 'Error occur'})
+
+
+
+
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+    print("run code")
+    if request.method == 'POST':
+        print("image loading....")
+        image1 = request.files['fileup2']
+        image2 = request.files['fileup']
+        score = readIamge(image1, image2)
+        prediction = score
+        return render_template('index.html', prediction=f' your grade is : {prediction}')
+    else:
+        return render_template('index.html', appName="Intel Image Classification")
+# eXtract correct from orgnal image
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
